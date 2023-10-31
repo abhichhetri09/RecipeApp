@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recipe List</title>
+</head>
+<body>
+    <h1>Recipes</h1>
+    <ul>
+        <!-- Loop through each recipe and display its name -->
+        <li th:each="recipe : ${recipes}">
+            <a th:href="@{/recipes/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a>
+        </li>
+    </ul>
+    <a href="/recipes/about">About</a>
+</body>
+</html>

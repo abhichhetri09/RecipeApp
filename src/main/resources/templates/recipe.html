@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${recipe.name}">Recipe Details</title>
+</head>
+<body>
+    <h1 th:text="${recipe.name}"></h1>
+    <p><strong>Ingredients:</strong> th:text="${recipe.ingredients}"></p>
+    <p><strong>Instructions:</strong> th:text="${recipe.instructions}"></p>
+    <a href="/recipes">Back to Recipes</a>
+</body>
+</html>
