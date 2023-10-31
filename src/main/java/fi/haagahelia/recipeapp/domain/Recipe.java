@@ -1,4 +1,4 @@
-package com.example.domain;
+package fi.haagahelia.recipeapp.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

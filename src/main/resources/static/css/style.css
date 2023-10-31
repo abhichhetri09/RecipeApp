@@ -1,0 +1,167 @@
+/* Reset some default browser styles */
+body, h1, h2, h3, p, table {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #e0e0e0;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #f7f7f7;
+}
+
+tr:hover {
+    background-color: #f0f0f0;
+}
+
+a {
+    text-decoration: none;
+    color: #007BFF;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: #0056b3;
+}
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: #fff;
+    text-align: center;
+    transition: background-color 0.2s, transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cancel {
+    background-color: #e0e0e0;
+}
+
+.cancel:hover {
+    background-color: #c7c7c7;
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.spacer {
+    margin-bottom: 20px;
+}
+/* ... existing CSS ... */
+
+/* Global Button Styles */
+button, .button, a.button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+/* View Button */
+.view {
+    background: linear-gradient(90deg, #34e89e, #0f5fa7);
+    color: #fff;
+}
+
+.view:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Add Button */
+.add {
+    background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
+    color: #fff;
+}
+
+.add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Edit Button */
+.edit {
+    background: linear-gradient(90deg, #f7971e, #ffd200);
+    color: #333;
+}
+
+.edit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Delete Button */
+.delete {
+    background: linear-gradient(90deg, #ed213a, #93291e);
+    color: #fff;
+}
+
+.delete:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 7px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* ... rest of the CSS ... */
+

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Recipe Details</title>
+        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2>Recipe Details</h2>
+
+<div>
+    <strong>Name:</strong> <span th:text="${recipe.name}"></span><br>
+    <strong>Description:</strong> <span th:text="${recipe.description}"></span><br>
+    <strong>Ingredients:</strong> <span th:text="${recipe.ingredients}"></span><br>
+    <strong>Instructions:</strong> <span th:text="${recipe.instructions}"></span>
+</div>
+<a th:href="@{'/recipes/edit/' + ${recipe.id}}">Edit</a>
+<a th:href="@{'/recipes/delete/' + ${recipe.id}}">Delete</a>
+<a th:href="@{/recipes}">Back to Recipe List</a>
+</body>
+</html>
