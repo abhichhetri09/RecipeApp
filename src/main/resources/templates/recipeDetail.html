@@ -1,20 +1,47 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Recipe Details</title>
-        <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
-</head>
-<body>
-<h2>Recipe Details</h2>
 
-<div>
-    <strong>Name:</strong> <span th:text="${recipe.name}"></span><br>
-    <strong>Description:</strong> <span th:text="${recipe.description}"></span><br>
-    <strong>Ingredients:</strong> <span th:text="${recipe.ingredients}"></span><br>
-    <strong>Instructions:</strong> <span th:text="${recipe.instructions}"></span>
-</div>
-<a th:href="@{'/recipes/edit/' + ${recipe.id}}">Edit</a>
-<a th:href="@{'/recipes/delete/' + ${recipe.id}}">Delete</a>
-<a th:href="@{/recipes}">Back to Recipe List</a>
+<head>
+	<title>Recipe Details</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+	<div class="container">
+		<h2>Recipe Details</h2>
+
+		<div class="form-container">
+			<div class="form-group">
+				<label for="name">Name:</label>
+				<div class="input-field" id="name" th:text="${recipe.name}"></div>
+			</div>
+			<div class="form-group">
+				<label for="description">Description:</label>
+				<div class="input-field" id="description" th:text="${recipe.description}"></div>
+			</div>
+			<div class="form-group">
+				<label for="ingredients">Ingredients:</label>
+				<div class="input-field" id="ingredients" th:text="${recipe.ingredients}"></div>
+			</div>
+			<div class="form-group">
+				<label for="instructions">Instructions:</label>
+				<div class="input-field" id="instructions" th:text="${recipe.instructions}"></div>
+			</div>
+			<div>
+				<!-- ... other fields ... -->
+				<strong>Category:</strong> <span th:text="${recipe.category}"></span><br>
+				<!-- ... other fields ... -->
+			</div>
+
+		</div>
+
+		<a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="button edit">Edit</a>
+		<form th:action="@{'/recipes/delete/' + ${recipe.id}}" method="post">
+			<input type="hidden" name="_method" value="delete" />
+			<button type="submit" class="button delete">Delete</button>
+		</form>
+		<a th:href="@{/recipes}" class="button cancel">Back to Recipe List</a>
+	</div>
 </body>
+
 </html>

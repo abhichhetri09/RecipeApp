@@ -18,17 +18,19 @@ public class Recipe {
     private String description;
     private String ingredients;
     private String instructions;
+    private String category;
 
     // Constructors, getters, and setters
 
     public Recipe() {
     }
 
-    public Recipe(String name, String description, String ingredients, String instructions) {
+    public Recipe(String name, String description, String ingredients, String instructions, String category) {
         this.name = name;
         this.description = description;
         this.ingredients = ingredients;
         this.instructions = instructions;
+        this.category = category;
     }
 
     public Long getId() {
@@ -70,4 +72,13 @@ public class Recipe {
     public void setInstructions(String instructions) {
         this.instructions = instructions;
     }
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+    
 }

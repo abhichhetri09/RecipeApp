@@ -8,11 +8,21 @@
     <div class="container">
         <h2>All Recipes</h2>
 
+        <!-- Category filter buttons -->
+        <div class="category-filter">
+            <h3>Filter by Category:</h3>
+            <button th:onclick="|location.href='@{/recipes/category/Appetizer}'|" class="button">Appetizer</button>
+            <button th:onclick="|location.href='@{/recipes/category/Main Course}'|" class="button">Main Course</button>
+            <button th:onclick="|location.href='@{/recipes/category/Dessert}'|" class="button">Dessert</button>
+            <!-- Add more buttons for additional categories as needed -->
+        </div>
+
         <table>
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Description</th>
+                <th>Category</th> <!-- Added Category column -->
                 <th>Actions</th>
             </tr>
             </thead>
@@ -20,10 +30,14 @@
             <tr th:each="recipe : ${recipes}">
                 <td th:text="${recipe.name}"></td>
                 <td th:text="${recipe.description}"></td>
+                <td th:text="${recipe.category}"></td> <!-- Display the category -->
                 <td>
-                    <a th:href="@{'/recipes/details/' + ${recipe.id}}" class="button view">View</a>
+                    <a th:href="@{'/recipes/' + ${recipe.id}}" class="button view">View</a>
                     <a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="button edit">Edit</a>
-                    <a th:href="@{'/recipes/delete/' + ${recipe.id}}" class="button delete">Delete</a>
+                     <form th:action="@{'/recipes/delete/' + ${recipe.id}}" method="post">
+                        <input type="hidden" name="_method" value="delete" />
+                        <button type="submit" class="button delete">Delete</button>
+                    </form>
                 </td>
             </tr>
             </tbody>
