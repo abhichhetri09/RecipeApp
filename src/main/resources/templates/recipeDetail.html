@@ -3,44 +3,27 @@
 
 <head>
 	<title>Recipe Details</title>
-	<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
 </head>
 
 <body>
 	<div class="container">
-		<h2>Recipe Details</h2>
+		<h2 th:text="${recipe.name}">Recipe Name</h2>
 
-		<div class="form-container">
-			<div class="form-group">
-				<label for="name">Name:</label>
-				<div class="input-field" id="name" th:text="${recipe.name}"></div>
-			</div>
-			<div class="form-group">
-				<label for="description">Description:</label>
-				<div class="input-field" id="description" th:text="${recipe.description}"></div>
-			</div>
-			<div class="form-group">
-				<label for="ingredients">Ingredients:</label>
-				<div class="input-field" id="ingredients" th:text="${recipe.ingredients}"></div>
-			</div>
-			<div class="form-group">
-				<label for="instructions">Instructions:</label>
-				<div class="input-field" id="instructions" th:text="${recipe.instructions}"></div>
-			</div>
-			<div>
-				<!-- ... other fields ... -->
-				<strong>Category:</strong> <span th:text="${recipe.category}"></span><br>
-				<!-- ... other fields ... -->
-			</div>
-
+		<div class="recipe-details">
+			<p><strong>Description:</strong> <span th:text="${recipe.description}">Recipe Description</span></p>
+			<p><strong>Ingredients:</strong> <span th:text="${recipe.ingredients}">Recipe Ingredients</span></p>
+			<p><strong>Instructions:</strong> <span th:text="${recipe.instructions}">Recipe Instructions</span></p>
+			<p><strong>Category:</strong> <span th:text="${recipe.category}">Recipe Category</span></p>
 		</div>
 
 		<a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="button edit">Edit</a>
-		<form th:action="@{'/recipes/delete/' + ${recipe.id}}" method="post">
-			<input type="hidden" name="_method" value="delete" />
-			<button type="submit" class="button delete">Delete</button>
-		</form>
-		<a th:href="@{/recipes}" class="button cancel">Back to Recipe List</a>
+		<a th:href="@{/}" class="button back">Back to List</a>
+
+		
+		
+	</div>
+
 	</div>
 </body>
 

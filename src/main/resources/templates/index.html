@@ -1,49 +1,77 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <title>Recipe List</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+	<title>Recipe List</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 </head>
+
 <body>
-    <div class="container">
-        <h2>All Recipes</h2>
+	<div class="user-info-button" onclick="toggleUserInfo()">
+		<i class="fa-solid fa-user fa-beat"></i>
+		<!-- Icon or image inside the oval -->
+	</div>
 
-        <!-- Category filter buttons -->
-        <div class="category-filter">
-            <h3>Filter by Category:</h3>
-            <button th:onclick="|location.href='@{/recipes/category/Appetizer}'|" class="button">Appetizer</button>
-            <button th:onclick="|location.href='@{/recipes/category/Main Course}'|" class="button">Main Course</button>
-            <button th:onclick="|location.href='@{/recipes/category/Dessert}'|" class="button">Dessert</button>
-            <!-- Add more buttons for additional categories as needed -->
-        </div>
+	<!-- User Info Pop-up -->
+	<div class="user-info-popup" id="userInfoPopup" style="display:none;">
+		<p>Authenticated as: <span th:text="${username}">Username</span></p>
+		<form th:action="@{/logout}" method="post">
+			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+			<input type="submit" value="Logout" class="button logout" />
+		</form>
+	</div>
+	<div class="container">
+		<h2>All Recipes</h2>
 
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Category</th> <!-- Added Category column -->
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="recipe : ${recipes}">
-                <td th:text="${recipe.name}"></td>
-                <td th:text="${recipe.description}"></td>
-                <td th:text="${recipe.category}"></td> <!-- Display the category -->
-                <td>
-                    <a th:href="@{'/recipes/' + ${recipe.id}}" class="button view">View</a>
-                    <a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="button edit">Edit</a>
-                     <form th:action="@{'/recipes/delete/' + ${recipe.id}}" method="post">
-                        <input type="hidden" name="_method" value="delete" />
-                        <button type="submit" class="button delete">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+		<!-- Category filter buttons -->
+		<div class="category-filter">
+			<h3>Filter by Category:</h3>
+			<button th:onclick="|location.href='@{/recipes/category/Appetizer}'|" class="button">Appetizer</button>
+			<button th:onclick="|location.href='@{/recipes/category/Main Course}'|" class="button">Main Course</button>
+			<button th:onclick="|location.href='@{/recipes/category/Dessert}'|" class="button">Dessert</button>
+			<!-- Add more buttons for additional categories as needed -->
+		</div>
 
-        <a th:href="@{/recipes/add}" class="button add">Add New Recipe</a>
-    </div>
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Category</th> <!-- Added Category column -->
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="recipe : ${recipes}">
+					<td th:text="${recipe.name}"></td>
+					<td th:text="${recipe.description}"></td>
+					<td th:text="${recipe.category}"></td> <!-- Display the category -->
+					<td>
+						<a th:href="@{'/recipes/' + ${recipe.id}}" class="button view">View</a>
+						<a th:href="@{'/recipes/edit/' + ${recipe.id}}" class="button edit">Edit</a>
+						<form th:action="@{'/recipes/delete/' + ${recipe.id}}" method="post" th:if="${isAdmin}">
+							<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+							<button type="submit" class="button delete">Delete</button>
+						</form>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<a th:href="@{/recipes/add}" class="button add">Add New Recipe</a>
+
+
+	</div>
+
 </body>
+<script>
+	// Function to toggle the visibility of the user info pop-up
+	function toggleUserInfo() {
+		var userInfoPopup = document.getElementById('userInfoPopup');
+		userInfoPopup.style.display = userInfoPopup.style.display === 'block' ? 'none' : 'block';
+	}
+</script>
+
 </html>

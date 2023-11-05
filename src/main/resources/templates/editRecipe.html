@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Edit Recipe</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}" />
 </head>
 <body>
     <div class="container">
         <h2>Edit Recipe</h2>
 
-        <form th:action="@{/recipes/edit}" th:object="${recipe}" method="post" class="form-container">
+        <form th:action="@{/recipes}" th:object="${recipe}" method="post" class="form-container">
             <input type="hidden" th:field="*{id}">
             <div class="form-group">
                 <label for="name">Name:</label>
@@ -27,11 +27,20 @@
                 <input type="text" th:field="*{instructions}" id="instructions" class="input-field">
             </div>
             <div class="form-group">
+                <label for="category">Category:</label>
+                <select th:field="*{category}" id="category" class="input-field">
+                    <option value="Appetizer">Appetizer</option>
+                    <option value="Main Course">Main Course</option>
+                    <option value="Dessert">Dessert</option>
+                    <!-- Add more categories as needed -->
+                </select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Update Recipe" class="button">
             </div>
         </form>
 
-        <a th:href="@{/recipes}" class="button cancel">Cancel</a>
+        <a th:href="@{/}" class="button cancel">Cancel</a>
     </div>
 </body>
 </html>
