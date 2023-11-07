@@ -20,7 +20,9 @@ table {
     border-collapse: collapse;
     margin: 20px 0;
 }
-
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+}
 table, th, td {
     border: 1px solid #ddd;
 }
@@ -119,7 +121,16 @@ tr:nth-child(even) {
 .button.cancel:hover {
     background-color: #a9a9a9;
 }
+/* Full-width button styles */
+.btn-block {
+    display: block;
+    width: 100%;
+}
 
+/* Custom styles for the logout button */
+.btn-danger {
+    margin-top: 0.5rem;
+}
 /* Form styles */
 .form-container {
     background: #f9f9f9;
@@ -144,39 +155,43 @@ tr:nth-child(even) {
     border: 1px solid #ddd;
 }
 /* Style for the floating user info button */
-.user-info-button {
-	position: absolute;
-	top: 10px; /* Adjust as needed */
-	right: 1px; /* Adjust as needed */
-	width: 50px; /* Size of the oval object */
-	height: 50px; /* Size of the oval object */
-	border-radius: 50%; /* Makes it oval */
-	cursor: pointer;
-	font-size: 50px;
-	/* Add additional styling such as box-shadow, border, etc., as desired */
-}
+
 
 /* Style for the user info pop-up */
 .user-info-popup {
-	position: fixed;
-	top: 70px; /* Adjust as needed, should be below the button */
-	right: 10px; /* Adjust as needed */
-	background-color: white;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	padding: 10px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-	/* Add additional styling as needed */
-	z-index: 100; /* Ensures it's above other content */
+    position: fixed;
+    top: 56px; /* Adjust based on your navbar's height */
+    right: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    padding: 1rem;
+    display: none; /* Hidden by default */
+    z-index: 1050; /* Ensures it's above other content */
 }
-
 /* Styling the logout button */
-.button.logout {
-	background-color: red;
-	color: white;
-	/* Add more styles if needed */
+.btn-logout {
+    background-color: #dc3545;
 }
 
+.btn-logout:hover {
+    background-color: #c82333;
+}
+.user-info-button {
+    position: fixed;
+    top: 56px; /* Adjusted to sit below Bootstrap's navbar */
+    right: 10px; /* Consistent spacing from the right edge */
+    z-index: 1050; /* Above the navbar */
+}
+
+/* Adjust the pop-up position for small screens */
+@media (max-width: 576px) {
+    .user-info-popup {
+        width: 90%;
+        left: 5%; /* Center the pop-up */
+        right: 5%; /* Center the pop-up */
+    }
 
 /* Responsive design */
 @media (max-width: 768px) {
