@@ -51,6 +51,7 @@ public class RecipeController {
 		boolean isAdmin = authentication.getAuthorities().stream()
 				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
 		model.addAttribute("isAdmin", isAdmin);
+		
 		return "index"; // This should be the name of your Thymeleaf template
 	}
 
@@ -63,11 +64,20 @@ public class RecipeController {
 	        model.addAttribute("likeCount", likeCount);
 	        List<Comment> comments = commentRepository.findByRecipeId(id); // Fetch comments
 	        model.addAttribute("comments", comments);
+	        
+	        // Assuming you have a method in your Recipe class to get the image path
+	        String imagePath = recipe.getImagePath();
+	        if (imagePath == null || imagePath.isEmpty()) {
+	            // Set a default image path if none is found
+	            imagePath = "/img/recipes/chicken.jpeg";
+	        }
+	        model.addAttribute("imagePath", imagePath);
 	    } else {
 	        return "error";
 	    }
 	    return "recipeDetail";
 	}
+
 
 
 
@@ -85,7 +95,7 @@ public class RecipeController {
 	@PostMapping("/recipes")
 	public String saveRecipe(@ModelAttribute Recipe recipe) {
 		recipeRepository.save(recipe);
-		return "redirect:/recipes";
+		return "redirect:/recipes/" + recipe.getId();
 	}
 
 	@GetMapping("/recipes/edit/{id}")

@@ -25,6 +25,23 @@ public class Recipe {
 
     @OneToMany(mappedBy = "recipe")
     private Set<RecipeLike> likes;
+    // Field for image path
+
+	private String imagePath;
+
+
+    // Constructors, other getters and setters...
+
+    public String getImagePath() {
+        // If you're naming the image files by recipe ID, construct the path like this:
+        return id != null ? "/img/recipes/" + id + ".jpeg" : null;
+    }
+
+
+    // Setter for the image path
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
 
     // Getter for the likes
     public Set<RecipeLike> getLikes() {
