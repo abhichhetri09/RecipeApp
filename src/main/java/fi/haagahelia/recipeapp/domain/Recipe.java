@@ -1,9 +1,12 @@
 package fi.haagahelia.recipeapp.domain;
 
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -19,6 +22,19 @@ public class Recipe {
     private String ingredients;
     private String instructions;
     private String category;
+
+    @OneToMany(mappedBy = "recipe")
+    private Set<RecipeLike> likes;
+
+    // Getter for the likes
+    public Set<RecipeLike> getLikes() {
+        return likes;
+    }
+
+    // Setter for the likes
+    public void setLikes(Set<RecipeLike> likes) {
+        this.likes = likes;
+    }
 
     // Constructors, getters, and setters
 
