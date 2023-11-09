@@ -15,12 +15,14 @@ Welcome to the Recipe Web Application repository. This application is a full-sta
 
 ## Technologies Used
 
-- Spring Boot
-- Spring Security
-- Spring Data JPA
-- Thymeleaf
-- H2 Database
-- Heroku for deployment
+* Spring Boot: For building the RESTful backend, handling the business logic, and managing application configuration.
+* Spring Security: Implements authentication and authorization for securing the application endpoints.
+* Thymeleaf: Server-side Java template engine for dynamic rendering of the HTML frontend.
+* PostgreSQL: Robust and reliable relational database for storing and retrieving persistent data efficiently.
+* Hibernate ORM: Maps Java classes to database tables and from Java data types to SQL data types.
+* Heroku: Cloud platform as a service (PaaS) for deploying and managing the application.
+* Bootstrap & CSS: For styling and creating a responsive frontend design.
+
 
 ## Local Setup
 
