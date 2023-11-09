@@ -32,22 +32,26 @@ import java.util.List;
 
 @Controller
 public class RecipeController {
-	@Autowired
-	private RecipeLikeRepository likeRepository;
+	 private final RecipeLikeRepository likeRepository;
+	    private final CommentRepository commentRepository;
+	    private final UserRepository userRepository;
+	    private final RecipeRepository recipeRepository;
+	    private final PasswordEncoder passwordEncoder;
+	    private static final Logger logger = (Logger) LoggerFactory.getLogger(RecipeController.class);
 
-	@Autowired
-	private CommentRepository commentRepository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private RecipeRepository recipeRepository;
-	private static final Logger logger = (Logger) LoggerFactory.getLogger(RecipeController.class);
-
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-
+	    @Autowired
+	    public RecipeController(
+	        RecipeLikeRepository likeRepository,
+	        CommentRepository commentRepository,
+	        UserRepository userRepository,
+	        RecipeRepository recipeRepository,
+	        PasswordEncoder passwordEncoder) {
+	        this.likeRepository = likeRepository;
+	        this.commentRepository = commentRepository;
+	        this.userRepository = userRepository;
+	        this.recipeRepository = recipeRepository;
+	        this.passwordEncoder = passwordEncoder;
+	    }
 	@GetMapping("/")
 	public String getAllRecipes(Model model, Authentication authentication) {
 
