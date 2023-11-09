@@ -12,6 +12,8 @@ import fi.haagahelia.recipeapp.domain.RecipeRepository;
 @Service
 public class RecipeService {
     
+	
+	
     @Autowired
     private RecipeRepository recipeRepository;
 

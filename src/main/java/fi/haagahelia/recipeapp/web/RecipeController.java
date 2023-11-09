@@ -13,17 +13,21 @@ import fi.haagahelia.recipeapp.domain.UserRepository;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ch.qos.logback.classic.Logger;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -41,6 +45,9 @@ public class RecipeController {
 	private RecipeRepository recipeRepository;
 	private static final Logger logger = (Logger) LoggerFactory.getLogger(RecipeController.class);
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	@GetMapping("/")
 	public String getAllRecipes(Model model, Authentication authentication) {
 
@@ -51,35 +58,32 @@ public class RecipeController {
 		boolean isAdmin = authentication.getAuthorities().stream()
 				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
 		model.addAttribute("isAdmin", isAdmin);
-		
+
 		return "index"; // This should be the name of your Thymeleaf template
 	}
 
 	@GetMapping("/recipes/{id}")
 	public String viewRecipe(@PathVariable Long id, Model model) {
-	    Recipe recipe = recipeRepository.findById(id).orElse(null);
-	    if (recipe != null) {
-	        model.addAttribute("recipe", recipe);
-	        int likeCount = likeRepository.countByRecipeId(id); // Corrected reference
-	        model.addAttribute("likeCount", likeCount);
-	        List<Comment> comments = commentRepository.findByRecipeId(id); // Fetch comments
-	        model.addAttribute("comments", comments);
-	        
-	        // Assuming you have a method in your Recipe class to get the image path
-	        String imagePath = recipe.getImagePath();
-	        if (imagePath == null || imagePath.isEmpty()) {
-	            // Set a default image path if none is found
-	            imagePath = "/img/recipes/chicken.jpeg";
-	        }
-	        model.addAttribute("imagePath", imagePath);
-	    } else {
-	        return "error";
-	    }
-	    return "recipeDetail";
+		Recipe recipe = recipeRepository.findById(id).orElse(null);
+		if (recipe != null) {
+			model.addAttribute("recipe", recipe);
+			int likeCount = likeRepository.countByRecipeId(id); // Corrected reference
+			model.addAttribute("likeCount", likeCount);
+			List<Comment> comments = commentRepository.findByRecipeId(id); // Fetch comments
+			model.addAttribute("comments", comments);
+
+			// Assuming you have a method in your Recipe class to get the image path
+			String imagePath = recipe.getImagePath();
+			if (imagePath == null || imagePath.isEmpty()) {
+				// Set a default image path if none is found
+				imagePath = "/img/recipes/chicken.jpeg";
+			}
+			model.addAttribute("imagePath", imagePath);
+		} else {
+			return "error";
+		}
+		return "recipeDetail";
 	}
-
-
-
 
 	@GetMapping("/recipes/error")
 	public String errorPage() {
@@ -122,37 +126,67 @@ public class RecipeController {
 		return "index"; // Assuming "index" is the template that lists recipes
 	}
 
-	@RequestMapping(value = "/login")
+	@GetMapping("/login")
 	public String login() {
-		return "login";
+		return "login"; // Name of the Thymeleaf template for the login page
 	}
-	 @PostMapping("/recipes/{id}/like")
-	    public String likeRecipe(@PathVariable Long id, Authentication authentication) {
-	        User user = userRepository.findByUsername(authentication.getName()).orElse(null);
-	        Recipe recipe = recipeRepository.findById(id).orElse(null);
-	        if (user != null && recipe != null) {
-	            RecipeLike like = new RecipeLike();
-	            like.setUser(user);
-	            like.setRecipe(recipe);
-	            likeRepository.save(like);
-	        }
-	        return "redirect:/recipes/" + id;
-	    }
-	 @PostMapping("/recipes/{id}/comment")
-	 public String addComment(@PathVariable Long id, @RequestParam String commentText, Authentication authentication) {
-	     User user = userRepository.findByUsername(authentication.getName()).orElse(null);
-	     Recipe recipe = recipeRepository.findById(id).orElse(null);
-	     if (user != null && recipe != null && !commentText.trim().isEmpty()) {
-	         Comment comment = new Comment();
-	         comment.setText(commentText);
-	         comment.setUser(user);
-	         comment.setRecipe(recipe);
-	         commentRepository.save(comment);
-	     }
-	     return "redirect:/recipes/" + id;
-	 }
-	
 
+	@PostMapping("/recipes/{id}/like")
+	public String likeRecipe(@PathVariable Long id, Authentication authentication) {
+		User user = userRepository.findByUsername(authentication.getName()).orElse(null);
+		Recipe recipe = recipeRepository.findById(id).orElse(null);
+		if (user != null && recipe != null) {
+			RecipeLike like = new RecipeLike();
+			like.setUser(user);
+			like.setRecipe(recipe);
+			likeRepository.save(like);
+		}
+		return "redirect:/recipes/" + id;
+	}
+
+	@PostMapping("/recipes/{id}/comment")
+	public String addComment(@PathVariable Long id, @RequestParam String commentText, Authentication authentication) {
+		User user = userRepository.findByUsername(authentication.getName()).orElse(null);
+		Recipe recipe = recipeRepository.findById(id).orElse(null);
+		if (user != null && recipe != null && !commentText.trim().isEmpty()) {
+			Comment comment = new Comment();
+			comment.setText(commentText);
+			comment.setUser(user);
+			comment.setRecipe(recipe);
+			commentRepository.save(comment);
+		}
+		return "redirect:/recipes/" + id;
+	}
+
+	@GetMapping("/signup")
+	public String signupForm(Model model) {
+		model.addAttribute("user", new User()); // 'user' should match the object name expected in the form
+		return "signup"; // Name of the Thymeleaf template for the signup page
+	}
+	
+	@PostMapping("/signup")
+	public String processSignup(@ModelAttribute User user, BindingResult result, Model model, RedirectAttributes redirectAttributes) {
+	    // Check if username already exists
+	    if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+	        model.addAttribute("signupError", "Username already exists");
+	        return "signup";
+	    }
+
+	    if (!result.hasErrors()) {
+	        // Encode the password before saving the user
+	        user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
+	        // Set the default role as "USER"
+	        user.setRole("USER");
+	        userRepository.save(user);
+	        // Add a flash attribute to show registration was successful
+	        redirectAttributes.addFlashAttribute("signupSuccess", "User has been created successfully!");
+	        return "redirect:/login"; // Redirect to the login page after successful signup
+	    } else {
+	        // If there are form errors, return to the signup page with an error message
+	        model.addAttribute("signupError", "An error occurred during the signup process.");
+	        return "signup";
+	    }
+	}
 
 
 }
