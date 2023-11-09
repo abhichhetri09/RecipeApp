@@ -45,7 +45,7 @@ To run this project locally:
     
 The application will start running on http://localhost:8080.
 
-##Heroku Deployment
+## Heroku Deployment
 This application is deployed on Heroku. If you'd like to deploy your own instance, follow the steps below:
 
 1. Create a Heroku account and log in.
@@ -61,7 +61,7 @@ This application is deployed on Heroku. If you'd like to deploy your own instanc
     
 Access your application through the URL provided by Heroku.
 
-##Contributing
+## Contributing
 Contributions to the Recipe Web Application are welcome!
 
 Please follow these steps to contribute:
@@ -77,10 +77,10 @@ Please ensure your pull request adheres to the following guidelines:
 * Keep descriptions short and simple, but descriptive.
 * Check your spelling and grammar.
 
-##License
+## License
 Distributed under the MIT License. See LICENSE for more information.
 
-Contact
+## Contact
 Abhishek khati chhetri - abhichhetri@outlook.com
 
 Project Link: https://github.com/abhichhetri09/recipe-web-app
