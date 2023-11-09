@@ -78,14 +78,7 @@ public class RecipeApplication {
 			        repository.save(stuffedMushrooms);
 			        repository.save(lemonCheesecakeBars);
 			        
-			        User user1 = new User("user1", "$2a$12$VVcWP9kZGpWHYtCnEr1pV.VQ.brIbtiukxYPNBtvUUVPmU695MCBC", "USER");
-					User user2 = new User("admin", "$2a$12$IDtzSjOcQLWNdAvV21W3Peu92F1xLulZvdmWCAVFYr9EnQ2.0jhkG", "ADMIN");
-					User user3 = new User("kiran", "$2a$12$Rk4iqVNSjEumeJ.zwmKiQe4fI2u2FXP9wjl07prsGPDdbp.vp7EsG"+ "", "USER");
-
-					urepository.save(user1);
-			        urepository.save(user2);
-			        urepository.save(user3);
-
+			       
 			     // Username: user, password: user
 
 			      //  userRepository.save(new User("user","$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue","USER"));
