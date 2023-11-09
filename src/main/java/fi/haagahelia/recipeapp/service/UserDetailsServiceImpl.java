@@ -6,19 +6,28 @@ import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import fi.haagahelia.recipeapp.domain.User;
 import fi.haagahelia.recipeapp.domain.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+	
+	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
+
+	// Autowire PasswordEncoder and UserRepository in the constructor
 	@Autowired
-	private UserRepository repository;
+	public UserDetailsServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username)throws UsernameNotFoundException {
-		
-		Optional<User> user = repository.findByUsername(username);
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+		Optional<User> user = userRepository.findByUsername(username);
 		UserBuilder builder = null;
 		if (user.isPresent()) {
 			User currentUser = user.get();

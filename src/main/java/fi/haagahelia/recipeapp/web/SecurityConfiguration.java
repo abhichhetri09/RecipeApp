@@ -18,13 +18,14 @@ import fi.haagahelia.recipeapp.service.UserDetailsServiceImpl;
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
-	@Autowired
-	private UserDetailsServiceImpl userDetailsServiceImpl;
+	private final UserDetailsServiceImpl userDetailsServiceImpl;
+	private final PasswordEncoder passwordEncoder;
 
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+    @Autowired
+    public SecurityConfiguration(UserDetailsServiceImpl userDetailsServiceImpl, PasswordEncoder passwordEncoder) {
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 	// using lambda
 	@Bean
@@ -42,6 +43,6 @@ public class SecurityConfiguration {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder());
+		auth.userDetailsService(userDetailsServiceImpl).passwordEncoder(passwordEncoder);
 	}
 }
