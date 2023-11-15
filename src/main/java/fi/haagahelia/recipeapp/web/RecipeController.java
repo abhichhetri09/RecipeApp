@@ -117,16 +117,17 @@ public class RecipeController {
 	}
 
 	@PostMapping("/recipes/delete/{id}")
-	public String deleteRecipe(@PathVariable Long id,Model model,  Authentication authentication) {
-		boolean isAdmin = authentication.getAuthorities().stream()
-				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
-		model.addAttribute("isAdmin", isAdmin);
+	public String deleteRecipe(@PathVariable Long id) {
+		
 		recipeRepository.deleteById(id);
 		return "redirect:/";
 	}
 
 	@GetMapping("/recipes/category/{category}")
-	public String getRecipesByCategory(@PathVariable String category, Model model) {
+	public String getRecipesByCategory(@PathVariable String category, Model model, Authentication authentication) {
+		boolean isAdmin = authentication.getAuthorities().stream()
+				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+		model.addAttribute("isAdmin", isAdmin);
 		model.addAttribute("recipes", recipeRepository.findByCategory(category));
 		return "index"; 
 	}
