@@ -10,5 +10,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     // Find comments by recipe
     List<Comment> findByRecipeIdOrderByPostedAtDesc(Long recipeId);
     List<Comment> findByRecipeId(Long recipeId);
-    // You can add more query methods as needed...
+   
 }

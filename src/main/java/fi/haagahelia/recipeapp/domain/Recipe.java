@@ -26,14 +26,13 @@ public class Recipe {
 
 	@OneToMany(mappedBy = "recipe")
 	private Set<RecipeLike> likes;
+	
 	// Field for image path
-
 	private String imagePath;
 
-	// Constructors, other getters and setters...
+	
 
 	public String getImagePath() {
-		// If you're naming the image files by recipe ID, construct the path like this:
 		return id != null ? "/img/recipes/" + id + ".jpeg" : null;
 	}
 
@@ -42,10 +41,6 @@ public class Recipe {
 		this.imagePath = imagePath;
 	}
 
-	// In your form-backing DTO
-
-
-	// Getter for the likes
 	public Set<RecipeLike> getLikes() {
 		return likes;
 	}
@@ -54,8 +49,6 @@ public class Recipe {
 	public void setLikes(Set<RecipeLike> likes) {
 		this.likes = likes;
 	}
-
-	// Constructors, getters, and setters
 
 	public Recipe() {
 	}

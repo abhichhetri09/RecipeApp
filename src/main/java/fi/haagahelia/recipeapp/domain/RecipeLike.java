@@ -47,5 +47,4 @@ public class RecipeLike {
 		this.user = user;
 	}
 
-    // Standard getters and setters
 }

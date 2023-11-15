@@ -17,7 +17,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
-	// Autowire PasswordEncoder and UserRepository in the constructor
 	@Autowired
 	public UserDetailsServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;

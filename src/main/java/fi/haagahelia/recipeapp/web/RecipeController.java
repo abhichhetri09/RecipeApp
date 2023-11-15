@@ -63,7 +63,7 @@ public class RecipeController {
 				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
 		model.addAttribute("isAdmin", isAdmin);
 
-		return "index"; // This should be the name of your Thymeleaf template
+		return "index"; 
 	}
 
 	@GetMapping("/recipes/{id}")
@@ -71,15 +71,13 @@ public class RecipeController {
 		Recipe recipe = recipeRepository.findById(id).orElse(null);
 		if (recipe != null) {
 			model.addAttribute("recipe", recipe);
-			int likeCount = likeRepository.countByRecipeId(id); // Corrected reference
+			int likeCount = likeRepository.countByRecipeId(id); 
 			model.addAttribute("likeCount", likeCount);
 			List<Comment> comments = commentRepository.findByRecipeId(id); // Fetch comments
 			model.addAttribute("comments", comments);
 
-			// Assuming you have a method in your Recipe class to get the image path
 			String imagePath = recipe.getImagePath();
 			if (imagePath == null || imagePath.isEmpty()) {
-				// Set a default image path if none is found
 				imagePath = "/img/recipes/chicken.jpeg";
 			}
 			model.addAttribute("imagePath", imagePath);
@@ -91,7 +89,7 @@ public class RecipeController {
 
 	@GetMapping("/recipes/error")
 	public String errorPage() {
-		return "error"; // This should be the name of your Thymeleaf error template
+		return "error"; 
 	}
 
 	@GetMapping("/recipes/add")
@@ -119,7 +117,10 @@ public class RecipeController {
 	}
 
 	@PostMapping("/recipes/delete/{id}")
-	public String deleteRecipe(@PathVariable Long id) {
+	public String deleteRecipe(@PathVariable Long id,Model model,  Authentication authentication) {
+		boolean isAdmin = authentication.getAuthorities().stream()
+				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
+		model.addAttribute("isAdmin", isAdmin);
 		recipeRepository.deleteById(id);
 		return "redirect:/";
 	}
@@ -127,12 +128,12 @@ public class RecipeController {
 	@GetMapping("/recipes/category/{category}")
 	public String getRecipesByCategory(@PathVariable String category, Model model) {
 		model.addAttribute("recipes", recipeRepository.findByCategory(category));
-		return "index"; // Assuming "index" is the template that lists recipes
+		return "index"; 
 	}
 
 	@GetMapping("/login")
 	public String login() {
-		return "login"; // Name of the Thymeleaf template for the login page
+		return "login"; 
 	}
 
 	@PostMapping("/recipes/{id}/like")
@@ -164,8 +165,8 @@ public class RecipeController {
 
 	@GetMapping("/signup")
 	public String signupForm(Model model) {
-		model.addAttribute("user", new User()); // 'user' should match the object name expected in the form
-		return "signup"; // Name of the Thymeleaf template for the signup page
+		model.addAttribute("user", new User()); 
+		return "signup";
 	}
 	
 	@PostMapping("/signup")
