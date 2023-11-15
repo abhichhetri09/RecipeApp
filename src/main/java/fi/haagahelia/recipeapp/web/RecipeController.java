@@ -128,6 +128,8 @@ public class RecipeController {
 		boolean isAdmin = authentication.getAuthorities().stream()
 				.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMIN"));
 		model.addAttribute("isAdmin", isAdmin);
+		model.addAttribute("username", authentication.getName());
+
 		model.addAttribute("recipes", recipeRepository.findByCategory(category));
 		return "index"; 
 	}
